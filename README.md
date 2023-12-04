@@ -1,6 +1,6 @@
 # microbit
 
-Following along with the [rust embedded book](https://docs.rust-embedded.org/discovery/microbit/03-setup/linux.html).
+Following along with the [rust embedded book](https://docs.rust-embedded.org/discovery/microbit).
 
 ## Required Dependencies
 

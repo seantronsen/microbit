@@ -14,6 +14,11 @@ prepare-system: 99-microbit.rules
 	sudo apt-get install -y gdb-multiarch minicom
 	sudo udevadm control --reload-rules # refresh udev to enact new rules
 
+	# does something like refreshing the udev tables. without this, only root can
+	# screw around with the device. with it, all users can (dev purposes only)
+	# see the issue for more details: https://github.com/rust-embedded/discovery/issues/490#issuecomment-1428700532
+	sudo udevadm trigger
+
 
 
 
@@ -21,9 +26,13 @@ prepare-system: 99-microbit.rules
 monitor:
 	udevadm monitor
 
-verify-installation: verify-permissions
+verify-installation: verify-permissions verify-cargo-embed
 	@echo "installation verified"
 
+verify-cargo-embed:
+	cd shortcut/03-setup \
+		&& rustup target add thumbv7em-none-eabihf \
+		&& cargo embed --target thumbv7em-none-eabihf
 
 verify-permissions:
 	lsusb | grep -i "NXP ARM mbed"
